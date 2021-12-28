@@ -28,7 +28,7 @@ const saveDb = (noteObj) => {
                reject(err);
                return;
             }
-            resolve("Successully added new note to database.");
+            resolve(noteObj);
          }
       );
    });

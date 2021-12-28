@@ -9,7 +9,7 @@ router.get("/notes", (req, res) => {
 router.post("/notes", (req, res) => {
    saveDb(req.body)
       .then((output) => {
-         res.send(output);
+         res.json(output);
       })
       .catch((err) => {
          res.send(err);
