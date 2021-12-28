@@ -1,12 +1,12 @@
 // dependencies
 const fs = require("fs");
 const path = require("path");
+const loadDb = require("./loadDb");
 const { nanoid } = require("nanoid");
-// data
-let db = require("../db/db");
 
 const saveDb = (noteObj) => {
-   return new Promise((resolve, reject) => {
+   let db = loadDb();
+   return new Promise((resolve) => {
       // validate data
       if (!noteObj.title) {
          reject("Error: 'title' property missing");
@@ -20,17 +20,11 @@ const saveDb = (noteObj) => {
       // add to db
       db.push(noteObj);
       // write file
-      fs.writeFile(
+      fs.writeFileSync(
          path.join(__dirname, "../db/db.json"),
-         JSON.stringify(db, null, 2),
-         (err) => {
-            if (err) {
-               reject(err);
-               return;
-            }
-            resolve(noteObj);
-         }
+         JSON.stringify(db, null, 2)
       );
+      resolve(noteObj);
    });
 };
 

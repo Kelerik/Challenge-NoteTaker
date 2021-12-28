@@ -1,19 +1,16 @@
 const router = require("express").Router();
-const db = require("../db/db");
-const saveDb = require("../utils/saveDb");
+const { loadDb, saveDb, deleteDb } = require("../utils/db");
 
 router.get("/notes", (req, res) => {
-   res.json(db);
+   res.json(loadDb());
 });
 
 router.post("/notes", (req, res) => {
-   saveDb(req.body)
-      .then((output) => {
-         res.json(output);
-      })
-      .catch((err) => {
-         res.send(err);
-      });
+   res.json(saveDb(req.body));
+});
+
+router.delete("/notes/:id", (req, res) => {
+   res.json(deleteDb(req.params.id));
 });
 
 module.exports = router;
